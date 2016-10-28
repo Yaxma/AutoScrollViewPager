@@ -54,10 +54,17 @@ public class MainActivity extends AppCompatActivity {
         list.add("http://img.zcool.cn/community/01b0ed555b4bef0000009af0b778ab.jpg");
         list.add("http://pic.58pic.com/58pic/13/57/38/52k58PICGqB_1024.jpg");
 
+        // 设置LayoutParams是为了添加外边距.
         LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         lp.rightMargin = 10;
+
+        // 我这里写这行是多余的，但是如果你们多次调用接口不清除就会出现许多小圆点
+        // 例如首页是列表，banner只是个header，多次刷新就会出现，或者接口调用写在onResume里面，等等。
+        indicatorLay.removeAllViews();
+
+        // for循环添加小圆点。
         for (int i = 0; i < list.size(); i++) {
             ImageView imageView = new ImageView(this);
             imageView.setBackgroundResource(R.drawable.dot_bg_selector);
@@ -69,14 +76,16 @@ public class MainActivity extends AppCompatActivity {
         View view = indicatorLay.getChildAt(0);
         if (view != null)
             view.setEnabled(true);
+
         pagerListener.setDotChangeData(list, indicatorLay);
         bannerAdapter.addUrlList(list);
+        // 开启轮播
         autoViewPager.start();
-
     }
 
     @Override protected void onDestroy() {
         super.onDestroy();
+        // 停止轮播
         autoViewPager.stop();
     }
 }
