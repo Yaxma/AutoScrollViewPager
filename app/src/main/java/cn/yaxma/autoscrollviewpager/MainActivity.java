@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         pagerListener = new BannerPagerListener();
         autoViewPager.addOnPageChangeListener(pagerListener);
 
+        // 轮播图点击事件，只返回真正的position，自行根据接口返回数据处理。
         bannerAdapter.setOnItemClickListener(new BannerAdapter.OnItemClickListener() {
             @Override public void onItemClick(int position) {
                 Toast.makeText(MainActivity.this, "position: " + position, Toast.LENGTH_SHORT).show();
